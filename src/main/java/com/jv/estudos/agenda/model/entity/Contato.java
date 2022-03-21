@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -25,5 +26,8 @@ public class Contato {
 	private String email;
 	
 	private Boolean favorito;
+	
+	@Lob
+	private byte[] foto;
 	
 }

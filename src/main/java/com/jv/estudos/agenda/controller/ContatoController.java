@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,6 +21,7 @@ import com.jv.estudos.agenda.model.repository.ContatoRepository;
 
 @RestController
 @RequestMapping("/contatos")
+@CrossOrigin("http://localhost:4200")
 public class ContatoController {
 
 	@Autowired
@@ -37,11 +39,16 @@ public class ContatoController {
 	}
 	
 	@PatchMapping("/{id}/favorito")
-	public void favoritar(@PathVariable Integer id, @RequestBody Boolean favorito) {
+	public void favoritar(@PathVariable Integer id) {
+		System.out.println("Alow " + id);
 		Optional<Contato> optContato = contatoRepository.findById(id);
 		
 		optContato.ifPresent(c -> {
-			c.setFavorito(favorito);
+			System.out.println(c.getFavorito());
+			boolean favorito = c.getFavorito() == Boolean.TRUE;
+			System.out.println(favorito);
+			
+			c.setFavorito(!favorito);
 			contatoRepository.save(c);
 		});
 	}
